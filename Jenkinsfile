@@ -59,7 +59,7 @@ stage(‘docker-package’){
         usersImage.push('latest')
       }
     }
-}
+// }
 }
 }
 
