@@ -15,7 +15,7 @@ sh 'mvn compile'
 stage("test"){ 
 steps{ 
 echo 'Running Unit Tets on users app..' 
-// dir('./'){ 
+dir('./'){ 
 //sh 'mvn clean test' 
   sleep 5
 } 
@@ -26,7 +26,7 @@ steps{
 echo 'Packaging users app' 
 dir('./'){ 
 sh 'mvn package -DskipTests' 
-archiveArtifacts artifacts: '/*.jar', 
+archiveArtifacts artifacts: './*.jar', 
 fingerprint: true 
 } 
 } 
