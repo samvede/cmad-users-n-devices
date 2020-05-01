@@ -54,7 +54,7 @@ stage(‘docker-package’){
     echo ‘Packaging users app with docker’
     script{
       docker.withRegistry(‘https://index.docker.io/v1/', 'dockerlogin’) {
-        def usersImage = docker.build(“DOCKERHUB_ID/users-n-devices:v$ {env.BUILD_ID}”, “./users-n-devices”) 
+        def usersImage = docker.build(“DOCKERHUB_ID/users-n-devices:v${env.BUILD_ID}”, “./users-n-devices”) 
         usersImage.push()
         usersImage.push(“latest”)
       }
