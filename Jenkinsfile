@@ -26,7 +26,7 @@ steps{
 echo 'Packaging users app' 
 dir('./'){ 
 sh 'mvn package -DskipTests' 
-archiveArtifacts artifacts: './*.jar', 
+archiveArtifacts artifacts: './target/classes/*.jar', 
 fingerprint: true 
 } 
 } 
