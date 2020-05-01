@@ -7,7 +7,7 @@ stages{
 stage("build"){ 
 steps{ 
 echo 'Compiling users app..' 
-dir('src/main/java/com/glarimy/cmad'){ 
+dir('./'){ 
 sh 'mvn compile' 
 } 
 } 
