@@ -18,12 +18,12 @@ pipeline{
     stage('test'){
       agent{ 
         docker{
-          image ‘maven:3.6.1-jdk-8-slim’ 
-          args ‘-v $HOME/.m2:/root/.m2’ 
+          image 'maven:3.6.1-jdk-8-slim' 
+          args '-v $HOME/.m2:/root/.m2' 
         } 
       } 
       steps{ 
-        echo ‘running unit tests on users app’ 
+        echo 'running unit tests on users app' 
         // sh ‘mvn clean test’ 
         sleep 5
       } 
@@ -32,24 +32,24 @@ pipeline{
     stage(‘package’){ 
       agent{ 
         docker{ 
-          image ‘maven:3.6.1-jdk-8-slim’ 
-          args ‘-v $HOME/.m2:/root/.m2’ 
+          image 'maven:3.6.1-jdk-8-slim' 
+          args '-v $HOME/.m2:/root/.m2' 
         } 
       } 
       steps{ 
-        echo ‘packaging users app into a jarfile’ 
-            dir(‘./’){ 
-            sh ‘mvn package -DskipTests’ 
-            archiveArtifacts artifacts: ‘target/*.jar’, fingerprint: true 
+        echo 'packaging users app into a jarfile' 
+            dir('./'){ 
+            sh 'mvn package -DskipTests' 
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true 
          } 
       } 
     } 
-    stage(‘docker-package’){ 
+    stage('docker-package'){ 
       agent any 
       steps{ 
-            echo ‘Packaging users app with docker’ 
+            echo 'Packaging users app with docker' 
             script{ 
-              docker.withRegistry(‘https://index.docker.io/v1/','dockerlogin’) { 
+              docker.withRegistry('https://index.docker.io/v1/','dockerlogin') { 
                 def usersImage = docker.build(“samvede/usersn-devices:v${env.BUILD_ID}”, “./users-n-devices”) 
                 usersImage.push() 
                 usersImage.push(“latest”) 
@@ -60,7 +60,7 @@ pipeline{
 } 
 post{ 
 always{ 
-echo ‘the job is complete’ 
+echo 'the job is complete' 
 } 
 } 
 }
