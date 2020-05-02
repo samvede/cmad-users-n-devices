@@ -48,7 +48,6 @@ stage("docker-package")
 		   }
 	    }
      }
-  }
 post{ 
 always{ 
 echo 'Building multibranch pipeline for users is completed..' 
