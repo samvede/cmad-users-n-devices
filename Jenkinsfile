@@ -28,7 +28,6 @@ pipeline{
         sleep 5
       } 
     } 
-  } 
     stage(‘package’){ 
       agent{ 
         docker{ 
@@ -63,4 +62,3 @@ post{
     echo 'the job is complete' 
   } 
 } 
-}
