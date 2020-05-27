@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-n-devices-angular
+  namespace: user-n-device-namespace
+  labels:
+    role: users-n-devices-angular
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  revisionHistoryLimit: 4
+  replicas: 12
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      role: users-n-devices-angular
+  template:
+    metadata:
+      name: users-n-devices-angular
+      labels:
+        app: angular
+        role: users-n-devices-angular
+    spec:
+      containers:
+        - name: app
+          image: samvede/users-n-devices-angular:latest
