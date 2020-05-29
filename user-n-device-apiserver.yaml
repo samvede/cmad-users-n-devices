@@ -35,6 +35,7 @@ spec:
       containers:
       - image: samvede/users-n-devices:latest
         name: rest-api-server
+        imagePullPolicy: Always
         ports:
         - containerPort: 8085
           name: rest-api-server
