@@ -1,29 +1,44 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: users-n-devices-angular
+  name: my-ng-und
   namespace: user-n-device-namespace
   labels:
-    role: users-n-devices-angular
+    run: my-ng-und
 spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
+  selector:
+    app: my-ng-und
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: my-ng-und
+  namespace: user-n-device-namespace
+spec:
+  selector:
+    matchLabels:
+      app: my-ng-und
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 2
       maxUnavailable: 1
   revisionHistoryLimit: 4
-  replicas: 12
+  replicas: 1
   minReadySeconds: 20
-  selector:
-    matchLabels:
-      role: users-n-devices-angular
   template:
     metadata:
-      name: users-n-devices-angular
       labels:
-        app: angular
-        role: users-n-devices-angular
+        app: my-ng-und
     spec:
       containers:
-        - name: app
-          image: samvede/users-n-devices-angular:latest
+      - image: samvede/user-n-devices-angular:v16
+        name: my-ng-und
+        #imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: my-ng-und

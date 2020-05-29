@@ -6,6 +6,7 @@ metadata:
 spec:
   ports:
   - port: 3306
+  type: LoadBalancer
   selector:
     app: mysql
 ---
@@ -32,6 +33,8 @@ spec:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
           value: admin
+        - name: MYSQL_DATABASE
+          value: events
         ports:
         - containerPort: 3306
           name: mysql
